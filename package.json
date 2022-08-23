@@ -18,5 +18,8 @@
   "homepage": "https://github.com/bogdan-panteleev/shop-be#readme",
   "dependencies": {
     "serverless": "^3.22.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
   }
 }

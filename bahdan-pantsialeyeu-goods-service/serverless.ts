@@ -1,6 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-
-import {hello} from '@functions/hello';
+import { functions } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
   service: 'bahdan-pantsialeyeu-goods-service',
@@ -12,7 +11,7 @@ const serverlessConfiguration: AWS = {
     profile: 'tmp',
     region: 'eu-central-1',
     iam: {
-      role: 'arn:aws:iam::398158581759:role/BasicLambdaExecutionRole'
+      role: 'arn:aws:iam::398158581759:role/BasicLambdaExecutionRole',
     },
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -24,7 +23,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello },
+  functions,
   package: { individually: true },
   custom: {
     esbuild: {
