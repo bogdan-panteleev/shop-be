@@ -1,8 +1,8 @@
-import { formatJSONResponse } from '@libs/api-gateway';
-import { middyfy } from '@libs/lambda';
 import { goodsMock } from '../../mocks/goods.mock';
+import { middyfy } from '../../libs/lambda';
+import { formatJSONResponse } from '../../libs/api-gateway';
 
-const getGoods = async () => {
+export const getGoods = async () => {
   return formatJSONResponse(goodsMock);
 };
 

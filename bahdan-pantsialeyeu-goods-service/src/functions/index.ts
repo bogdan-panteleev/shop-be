@@ -1,4 +1,4 @@
-import { getGoods } from '@functions/getGoods';
-import { getGoodsById } from '@functions/getGoodsById';
+import { getGoods } from './getGoods/handler';
+import { getGoodsById } from './getGoodsById/handler';
 
 export const functions = { getGoods, getGoodsById };
