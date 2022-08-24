@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import { functions } from '@functions/index';
+import { functions } from './src/functions';
 
 const serverlessConfiguration: AWS = {
   service: 'bahdan-pantsialeyeu-goods-service',

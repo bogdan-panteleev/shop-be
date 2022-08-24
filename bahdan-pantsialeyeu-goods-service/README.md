@@ -80,7 +80,6 @@ The project code base is mainly located within the `src` folder. This folder is 
 ├── package.json
 ├── serverless.ts               # Serverless service file
 ├── tsconfig.json               # Typescript compiler configuration
-├── tsconfig.paths.json         # Typescript paths
 └── webpack.config.js           # Webpack configuration
 ```
 

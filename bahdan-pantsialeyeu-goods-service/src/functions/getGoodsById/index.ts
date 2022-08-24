@@ -1,6 +1,6 @@
 // import schema from './schema';
-import { handlerPath } from '@libs/handler-resolver';
 import { AWS } from '@serverless/typescript';
+import { handlerPath } from '../../libs/handler-resolver';
 
 export const getGoodsById: AWS['functions']['getGoodsById'] = {
   handler: `${handlerPath(__dirname)}/handler.main`,
