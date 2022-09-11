@@ -17,6 +17,7 @@ export const formatJSONResponse = (response: any) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
       'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*',
     },
   };
 };
