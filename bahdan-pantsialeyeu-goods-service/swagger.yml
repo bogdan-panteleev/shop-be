@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Swagger Goods Service - OpenAPI 3.0
+  description: |-
+    Product service swagger
+  version: 1.0.11
+servers:
+  - url: https://msit3q4005.execute-api.eu-central-1.amazonaws.com/dev/
+tags:
+  - name: goods
+    description: Everything about Goods
+paths:
+  /goods:
+    get:
+      tags:
+        - goods
+      summary: Get all goods
+      description: Get all goods
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Good'
+        '404':
+          description: Pet not found
+  /goods/{goodsId}:
+    get:
+      tags:
+        - goods
+      summary: Find goods by ID
+      description: Returns a single goods
+      parameters:
+        - name: goodsId
+          in: path
+          description: ID of goods to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+        '404':
+          description: Goods not found
+components:
+  schemas:
+    Good:
+      required:
+        - name
+        - photoUrls
+      type: object
+      properties:
+        id:
+          type: string
+          format: int64
+          example: 1
+        description:
+          type: string
+          example: Fencing gloves
+        imageUrl:
+          type: string
+          example: https://source.unsplash.com/random
