@@ -1,15 +1,13 @@
 import { formatJSONResponse } from '../../libs/api-gateway';
 import { middyfy } from '../../libs/lambda';
-import { dynamoDBClient } from '../../dynamo-db.provider';
-import { custom } from '../../../custom';
+import { ProductsService } from '../products.service';
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import { Product } from '../../models/product';
 
-export function init(dynamo) {
-  async function createProduct(event): Promise<any> {
-    const a = dynamoDBClient();
-    await a
-      .put({ TableName: custom.productsTableName, Item: { id: 'test', val: 'lalala' } })
-      .promise();
-    return formatJSONResponse({ text: 'successfull', event });
+export function initCreateProduct(productsService: ProductsService) {
+  async function createProduct(event: APIGatewayProxyEvent): Promise<any> {
+    const res = await productsService.create(event.body as unknown as Product);
+    return formatJSONResponse({ res });
   }
 
   return middyfy(createProduct);

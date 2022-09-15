@@ -1,4 +1,4 @@
-import { productsMock } from '../../mocks/products.mock';
+import { productsMock } from '../../models/product';
 import { getProducts } from './handler';
 
 describe('getGoods', () => {

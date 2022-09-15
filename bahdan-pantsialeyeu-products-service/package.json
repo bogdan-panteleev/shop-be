@@ -13,7 +13,8 @@
     "@middy/core": "^2.5.3",
     "@middy/http-header-normalizer": "^3.3.2",
     "@middy/http-json-body-parser": "^2.5.3",
-    "aws-sdk": "^2.1216.0"
+    "aws-sdk": "^2.1216.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",

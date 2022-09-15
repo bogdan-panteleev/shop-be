@@ -2,7 +2,7 @@ import { AWS } from '@serverless/typescript';
 import { handlerPath } from '../../libs/handler-resolver';
 
 export const createProduct: AWS['functions']['createProduct'] = {
-  handler: `${handlerPath(__dirname)}/handler.main`,
+  handler: `${handlerPath(__dirname)}/../handlers.createProduct`,
   events: [
     {
       http: {

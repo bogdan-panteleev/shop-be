@@ -1,27 +1,29 @@
-import { productsMock } from '../../mocks/products.mock';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { formatJSONResponse } from '../../libs/api-gateway';
 import { middyfy } from '../../libs/lambda';
+import { ProductsService } from '../products.service';
 
-export const getProductById = async (event: APIGatewayProxyEvent) => {
-  try {
-    const productId = event.pathParameters.productId;
-    const item = productsMock.find((item) => item.id === productId);
+export function initGetProductById(productsService: ProductsService) {
+  async function getProductById(event: APIGatewayProxyEvent): Promise<any> {
+    try {
+      const productId = event.pathParameters.productId;
+      const result = await productsService.getById(productId);
 
-    if (!item) {
+      // if (!item) {
+      //   return {
+      //     statusCode: 404,
+      //     body: JSON.stringify({ message: `Goods with ID:${productId} does not exist` }),
+      //   };
+      // }
+
+      return formatJSONResponse(result);
+    } catch (error: unknown) {
       return {
-        statusCode: 404,
-        body: JSON.stringify({ message: `Goods with ID:${productId} does not exist` }),
+        statusCode: 503,
+        body: JSON.stringify({ message: error.toString() }),
       };
     }
-
-    return formatJSONResponse(item);
-  } catch (error: unknown) {
-    return {
-      statusCode: 503,
-      body: JSON.stringify({ message: error.toString() }),
-    };
   }
-};
 
-export const main = middyfy(getProductById);
+  return middyfy(getProductById);
+}

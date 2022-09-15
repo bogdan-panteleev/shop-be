@@ -1,6 +1,6 @@
 import { getProductById } from './handler';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
-import { Product } from '../../mocks/products.mock';
+import { Product } from '../../models/product';
 
 describe('getGoodsById', () => {
   it('should fail if path parameters not specified', async () => {
