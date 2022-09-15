@@ -1,10 +1,10 @@
-export interface Good {
+export interface Product {
   id: string;
   description: string;
   imageUrl: string;
 }
 
-export const goodsMock: Good[] = [
+export const productsMock: Product[] = [
   {
     id: '1',
     description: 'Fencing Gloves',

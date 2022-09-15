@@ -1,5 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 import { functions } from './src/functions';
+import { custom } from './custom';
 
 const serverlessConfiguration: AWS = {
   service: 'bahdan-pantsialeyeu-goods-service',
@@ -11,7 +12,21 @@ const serverlessConfiguration: AWS = {
     profile: 'tmp',
     region: 'eu-central-1',
     iam: {
-      role: 'arn:aws:iam::398158581759:role/BasicLambdaExecutionRole',
+      role: {
+        permissionsBoundary: 'arn:aws:iam::${aws:accountId}:policy/eo_role_boundary',
+        statements: [
+          {
+            Effect: 'Allow',
+            Action: 's3:*',
+            Resource: '*',
+          },
+          {
+            Effect: 'Allow',
+            Action: 'dynamodb:*',
+            Resource: '*',
+          },
+        ],
+      },
     },
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -35,6 +50,33 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
+    },
+  },
+
+  resources: {
+    Resources: {
+      productsTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: custom.productsTableName,
+          AttributeDefinitions: [
+            {
+              AttributeName: 'id',
+              AttributeType: 'S',
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'id',
+              KeyType: 'HASH',
+            },
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+          },
+        },
+      },
     },
   },
 };

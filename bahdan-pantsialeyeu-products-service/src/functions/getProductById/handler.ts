@@ -1,17 +1,17 @@
-import { goodsMock } from '../../mocks/goods.mock';
+import { productsMock } from '../../mocks/products.mock';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { formatJSONResponse } from '../../libs/api-gateway';
 import { middyfy } from '../../libs/lambda';
 
-export const getGoodsById = async (event: APIGatewayProxyEvent) => {
+export const getProductById = async (event: APIGatewayProxyEvent) => {
   try {
-    const goodsId = event.pathParameters.goodsId;
-    const item = goodsMock.find((item) => item.id === goodsId);
+    const productId = event.pathParameters.productId;
+    const item = productsMock.find((item) => item.id === productId);
 
     if (!item) {
       return {
         statusCode: 404,
-        body: JSON.stringify({ message: `Goods with ID:${goodsId} does not exist` }),
+        body: JSON.stringify({ message: `Goods with ID:${productId} does not exist` }),
       };
     }
 
@@ -24,4 +24,4 @@ export const getGoodsById = async (event: APIGatewayProxyEvent) => {
   }
 };
 
-export const main = middyfy(getGoodsById);
+export const main = middyfy(getProductById);

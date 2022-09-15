@@ -2,13 +2,13 @@
 import { AWS } from '@serverless/typescript';
 import { handlerPath } from '../../libs/handler-resolver';
 
-export const getGoodsById: AWS['functions']['getGoodsById'] = {
+export const getProductById: AWS['functions']['getProductById'] = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
       http: {
         method: 'get',
-        path: 'goods/{goodsId}',
+        path: 'products/{productId}',
       },
     },
   ],
