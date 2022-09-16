@@ -5,19 +5,25 @@ import { ProductsService } from '../products.service';
 
 export function initGetProductById(productsService: ProductsService) {
   async function getProductById(event: APIGatewayProxyEvent): Promise<any> {
+    console.log('getProductById is called');
     try {
       const productId = event.pathParameters.productId;
-      const result = await productsService.getById(productId);
+      console.log('getProductById got productId as ', productId);
 
-      // if (!item) {
-      //   return {
-      //     statusCode: 404,
-      //     body: JSON.stringify({ message: `Goods with ID:${productId} does not exist` }),
-      //   };
-      // }
+      const product = await productsService.getById(productId);
 
-      return formatJSONResponse(result);
+      if (product === undefined) {
+        console.log(`getProductById product with id:${productId} does not exist`);
+        return {
+          statusCode: 404,
+          body: JSON.stringify({ message: `Product with ID:${productId} does not exist` }),
+        };
+      }
+
+      console.log('getProductById successfully returned product with id ', productId);
+      return formatJSONResponse(product);
     } catch (error: unknown) {
+      console.log(`getProductById failed with error `, error);
       return {
         statusCode: 503,
         body: JSON.stringify({ message: error.toString() }),

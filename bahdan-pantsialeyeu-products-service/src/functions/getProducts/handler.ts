@@ -4,11 +4,12 @@ import { ProductsService } from '../products.service';
 
 export function initGetProducts(productsService: ProductsService) {
   async function getProducts() {
+    console.log('getProducts called');
     try {
-      const result = await productsService.getAll();
-
-      return formatJSONResponse(result);
+      console.log('getProducts successfully retrieved products');
+      return formatJSONResponse(await productsService.getAll());
     } catch (e) {
+      console.error('getProducts failed with error', e);
       return {
         statusCode: 503,
         body: JSON.stringify({ message: e.toString() }),

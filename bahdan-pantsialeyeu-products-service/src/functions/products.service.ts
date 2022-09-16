@@ -10,16 +10,16 @@ export class ProductsService {
 
   getAll(): Promise<Product[]> {
     return this.dbClient
-      .query({ TableName: this.dataTable })
+      .scan({ TableName: this.dataTable })
       .promise()
       .then((val) => val.Items as Product[]);
   }
 
-  getById(id: string): Promise<Product> {
+  getById(id: string): Promise<Product | undefined> {
     return this.dbClient
       .get({ TableName: this.dataTable, Key: { id } })
       .promise()
-      .then((val) => val.Item as Product);
+      .then<Product | undefined>((val) => val.Item as Product | undefined);
   }
 
   create(product: Omit<Product, 'id'>): Promise<any> {

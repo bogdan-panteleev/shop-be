@@ -12,8 +12,8 @@ const productsService = new ProductsService(
   uuid
 );
 
-export default {
-  createProduct: initCreateProduct(productsService),
-  getProductById: initGetProductById(productsService),
-  getProducts: initGetProducts(productsService),
-};
+const createProduct = initCreateProduct(productsService);
+const getProductById = initGetProductById(productsService);
+const getProducts = initGetProducts(productsService);
+
+export { createProduct, getProductById, getProducts };
