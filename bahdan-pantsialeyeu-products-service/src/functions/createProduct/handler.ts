@@ -14,7 +14,7 @@ export function initCreateProduct(productsService: ProductsService) {
     } catch (e: unknown) {
       console.error('createProduct error', e);
       return {
-        statusCode: 503,
+        statusCode: 500,
         body: JSON.stringify({ message: e }),
       };
     }

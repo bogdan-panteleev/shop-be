@@ -27,7 +27,7 @@ export function initGetProductById(productsService: ProductsService) {
     } catch (error: unknown) {
       console.log(`getProductById failed with error `, error);
       return {
-        statusCode: 503,
+        statusCode: 500,
         body: JSON.stringify({ message: error instanceof Error ? error.toString() : error }),
       };
     }

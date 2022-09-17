@@ -17,7 +17,7 @@ export function initDeleteProduct(productsService: ProductsService) {
     } catch (e: unknown) {
       console.log(`deleteProduct failed with error `, e);
       return {
-        statusCode: 503,
+        statusCode: 500,
         body: JSON.stringify({ message: e instanceof Error ? e.toString() : e }),
       };
     }

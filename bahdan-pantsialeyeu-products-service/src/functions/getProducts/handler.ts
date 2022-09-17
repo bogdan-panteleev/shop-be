@@ -10,7 +10,7 @@ export function initGetProducts(productsService: ProductsService) {
     } catch (e: unknown) {
       console.error('getProducts failed with error', e);
       return {
-        statusCode: 503,
+        statusCode: 500,
         body: JSON.stringify({ message: e }),
       };
     }

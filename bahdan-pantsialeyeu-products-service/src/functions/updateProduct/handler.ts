@@ -20,14 +20,8 @@ export function initUpdateProduct(productsService: ProductsService) {
     } catch (error: unknown) {
       console.log(`updateProduct failed with error `, error);
       return {
-        statusCode: 503,
+        statusCode: 500,
         body: JSON.stringify({ message: error instanceof Error ? error.toString() : error }),
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Methods': '*',
-        },
       };
     }
   }
