@@ -1,38 +1,53 @@
-import { getProductById } from './handler';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { Product } from '../../models/product';
+import { initGetProductById } from './handler';
+import { ProductsService } from '../products.service';
 
 describe('getGoodsById', () => {
   it('should fail if path parameters not specified', async () => {
-    return getProductById({ pathParameters: null } as APIGatewayProxyEvent).then((response) => {
+    return initGetProductById({} as ProductsService)({
+      pathParameters: null,
+    } as APIGatewayProxyEvent).then((response) => {
       expect(response).toMatchObject({ statusCode: 503 });
       expect(JSON.parse(response.body)).toEqual({
-        message: "TypeError: Cannot read property 'goodsId' of null",
+        message: `Error: path parameter 'productId' is required`,
       });
     });
   });
 
   it('should return 404 for non-existing product', async () => {
-    return getProductById({
-      pathParameters: { goodsId: 'non existing' },
+    return initGetProductById({
+      getById(_id: string) {
+        return Promise.resolve(undefined);
+      },
+    } as ProductsService)({
+      pathParameters: { productId: 'non_existing' },
     } as unknown as APIGatewayProxyEvent).then((response) => {
       expect(response).toMatchObject({ statusCode: 404 });
       expect(JSON.parse(response.body)).toEqual({
-        message: `Goods with ID:non existing does not exist`,
+        message: 'Product with ID:non_existing does not exist',
       });
     });
   });
 
-  it('should return correct goods', async () => {
-    return getProductById({
-      pathParameters: { goodsId: '1' },
+  it('should return correct product', async () => {
+    const productMock = {
+      id: '0',
+      title: '1',
+      description: '2',
+      count: 3,
+      price: 4,
+      imageUrl: '5',
+    };
+    return initGetProductById({
+      getById(_id: string) {
+        return Promise.resolve(productMock);
+      },
+    } as ProductsService)({
+      pathParameters: { productId: '1' },
     } as unknown as APIGatewayProxyEvent).then((response) => {
       expect(response).toMatchObject({ statusCode: 200 });
-      expect(JSON.parse(response.body)).toEqual<Product>({
-        description: 'Fencing Gloves',
-        id: '1',
-        imageUrl: 'https://source.unsplash.com/random',
-      });
+      expect(JSON.parse(response.body)).toEqual<Product>(productMock);
     });
   });
 });

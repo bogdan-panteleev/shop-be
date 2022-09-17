@@ -1,12 +1,14 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { formatJSONResponse } from '../../libs/api-gateway';
-import { middyfy } from '../../libs/lambda';
 import { ProductsService } from '../products.service';
 
 export function initGetProductById(productsService: ProductsService) {
   async function getProductById(event: APIGatewayProxyEvent): Promise<any> {
     console.log('getProductById is called');
     try {
+      if (!event.pathParameters?.productId) {
+        throw new Error(`path parameter 'productId' is required`);
+      }
       const productId = event.pathParameters.productId;
       console.log('getProductById got productId as ', productId);
 
@@ -26,10 +28,10 @@ export function initGetProductById(productsService: ProductsService) {
       console.log(`getProductById failed with error `, error);
       return {
         statusCode: 503,
-        body: JSON.stringify({ message: error.toString() }),
+        body: JSON.stringify({ message: error instanceof Error ? error.toString() : error }),
       };
     }
   }
 
-  return middyfy(getProductById);
+  return getProductById;
 }
