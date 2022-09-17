@@ -8,6 +8,7 @@ export const createProduct: AWS['functions']['createProduct'] = {
       http: {
         method: 'post',
         path: 'products',
+        cors: true,
         // request: {
         //   schemas: {
         //     'application/json': {

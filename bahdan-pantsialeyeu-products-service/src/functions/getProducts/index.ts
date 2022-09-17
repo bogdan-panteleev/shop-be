@@ -10,6 +10,7 @@ export const getProducts: AWS['functions']['getProducts'] = {
       http: {
         method: 'get',
         path: 'products',
+        cors: true,
       },
     },
   ],

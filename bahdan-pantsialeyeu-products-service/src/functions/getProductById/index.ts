@@ -9,6 +9,7 @@ export const getProductById: AWS['functions']['getProductById'] = {
       http: {
         method: 'get',
         path: 'products/{productId}',
+        cors: true,
       },
     },
   ],

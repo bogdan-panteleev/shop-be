@@ -9,6 +9,7 @@ export const deleteProduct: AWS['functions']['getProductById'] = {
       http: {
         method: 'delete',
         path: 'products/{productId}',
+        cors: true,
       },
     },
   ],
