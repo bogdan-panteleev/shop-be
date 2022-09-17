@@ -27,4 +27,11 @@ export class ProductsService {
       .put({ TableName: this.dataTable, Item: { ...product, id: this.keyGenerator() } })
       .promise();
   }
+
+  deleteById(id: string): Promise<null> {
+    return this.dbClient
+      .delete({ TableName: this.dataTable, Key: { id } })
+      .promise()
+      .then(() => null);
+  }
 }
