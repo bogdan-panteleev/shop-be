@@ -24,7 +24,14 @@ export class ProductsService {
 
   create(product: Omit<Product, 'id'>): Promise<any> {
     return this.dbClient
-      .put({ TableName: this.dataTable, Item: { ...product, id: this.keyGenerator() } })
+      .put({
+        TableName: this.dataTable,
+        Item: {
+          ...product,
+          id: this.keyGenerator(),
+          imageUrl: 'https://source.unsplash.com/random',
+        },
+      })
       .promise();
   }
 
