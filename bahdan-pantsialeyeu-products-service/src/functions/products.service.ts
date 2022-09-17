@@ -28,6 +28,10 @@ export class ProductsService {
       .promise();
   }
 
+  update(product: Partial<Product>): Promise<any> {
+    return this.dbClient.put({ TableName: this.dataTable, Item: { ...product } }).promise();
+  }
+
   deleteById(id: string): Promise<null> {
     return this.dbClient
       .delete({ TableName: this.dataTable, Key: { id } })

@@ -7,6 +7,7 @@ import { initGetProductById } from './getProductById/handler';
 import { initGetProducts } from './getProducts/handler';
 import { middyfy } from '../libs/lambda';
 import { initDeleteProduct } from './deleteProduct/handler';
+import { initUpdateProduct } from './updateProduct/handler';
 
 const productsService = new ProductsService(
   new AWS.DynamoDB.DocumentClient(),
@@ -18,5 +19,6 @@ const createProduct = middyfy(initCreateProduct(productsService));
 const getProductById = middyfy(initGetProductById(productsService));
 const getProducts = middyfy(initGetProducts(productsService));
 const deleteProduct = middyfy(initDeleteProduct(productsService));
+const updateProduct = middyfy(initUpdateProduct(productsService));
 
-export { createProduct, getProductById, getProducts, deleteProduct };
+export { createProduct, getProductById, getProducts, deleteProduct, updateProduct };
