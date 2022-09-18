@@ -8,6 +8,7 @@ import { initGetProducts } from './getProducts/handler';
 import { initDeleteProduct } from './deleteProduct/handler';
 import { initUpdateProduct } from './updateProduct/handler';
 import { middyfy } from '../libs/middlewares';
+import validator from '@middy/validator';
 
 const productsService = new ProductsService(
   new AWS.DynamoDB.DocumentClient(),
@@ -15,7 +16,22 @@ const productsService = new ProductsService(
   uuid
 );
 
-export const createProduct = middyfy(initCreateProduct(productsService));
+export const createProduct = middyfy(initCreateProduct(productsService)).use(
+  validator({
+    inputSchema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        title: { type: 'string' },
+        description: { type: 'string' },
+        price: { type: 'number' },
+        count: { type: 'number' },
+      },
+      required: ['id', 'title', 'description', 'price', 'count'],
+    },
+  })
+);
+
 export const getProductById = middyfy(initGetProductById(productsService));
 export const getProducts = middyfy(initGetProducts(productsService));
 export const deleteProduct = middyfy(initDeleteProduct(productsService));
