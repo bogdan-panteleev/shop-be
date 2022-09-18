@@ -1,13 +1,17 @@
 import { ProductsService } from '../products.service';
-import { formatJSONResponse } from '../../libs/api-gateway';
 import { GatewayProxyEvent, Product } from '../../models/product';
+import { Handler } from 'aws-lambda';
+import { HttpResponse } from '../../models/httpResponse';
 
-export function initUpdateProduct(productsService: ProductsService) {
-  async function updateProduct(event: GatewayProxyEvent<Product>): Promise<any> {
+export function initUpdateProduct(productsService: ProductsService): Handler {
+  async function updateProduct(event: GatewayProxyEvent<Product>): Promise<HttpResponse> {
     console.log('updateProduct is called');
     try {
       if (!event.pathParameters?.productId) {
         throw new Error(`path parameter 'productId' is required`);
+      }
+      if (!event.body) {
+        throw new Error(`request body is required`);
       }
       const productId = event.pathParameters.productId;
       console.log(`updateProduct got productId as ${productId} and body as ${event.body}`);
@@ -16,12 +20,12 @@ export function initUpdateProduct(productsService: ProductsService) {
       await productsService.update(product);
 
       console.log('updateProduct successfully updated product with to ', product);
-      return formatJSONResponse({ message: 'Product successfully updated' });
+      return { statusCode: 200, body: { message: 'Product successfully updated' } };
     } catch (error: unknown) {
       console.log(`updateProduct failed with error `, error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ message: error instanceof Error ? error.toString() : error }),
+        body: { message: error instanceof Error ? error.toString() : error },
       };
     }
   }

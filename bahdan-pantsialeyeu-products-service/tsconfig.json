@@ -21,7 +21,6 @@
     "allowUnusedLabels": false,
     "resolveJsonModule": true,
     "noStrictGenericChecks": false,
-    "strictNullChecks": false
   },
   "include": ["src/**/*.ts", "serverless.ts"],
   "exclude": [

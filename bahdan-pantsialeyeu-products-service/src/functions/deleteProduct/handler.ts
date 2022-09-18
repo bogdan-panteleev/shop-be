@@ -1,9 +1,10 @@
 import { ProductsService } from '../products.service';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
-import { formatJSONResponse } from '../../libs/api-gateway';
+import { Handler } from 'aws-lambda';
+import { HttpResponse } from '../../models/httpResponse';
 
-export function initDeleteProduct(productsService: ProductsService) {
-  async function deleteProduct(event: APIGatewayProxyEvent) {
+export function initDeleteProduct(productsService: ProductsService): Handler {
+  async function deleteProduct(event: APIGatewayProxyEvent): Promise<HttpResponse> {
     console.log('deleteProduct is called');
     try {
       if (!event.pathParameters?.productId) {
@@ -13,12 +14,15 @@ export function initDeleteProduct(productsService: ProductsService) {
       const productId = event.pathParameters.productId;
 
       await productsService.deleteById(productId);
-      return formatJSONResponse({ message: `Successfully deleted product with ID:${productId}` });
+      return {
+        statusCode: 200,
+        body: { message: `Successfully deleted product with ID:${productId}` },
+      };
     } catch (e: unknown) {
       console.log(`deleteProduct failed with error `, e);
       return {
         statusCode: 500,
-        body: JSON.stringify({ message: e instanceof Error ? e.toString() : e }),
+        body: { message: e instanceof Error ? e.toString() : e },
       };
     }
   }

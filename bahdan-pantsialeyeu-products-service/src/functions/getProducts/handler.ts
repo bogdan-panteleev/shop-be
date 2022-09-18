@@ -1,17 +1,18 @@
-import { formatJSONResponse } from '../../libs/api-gateway';
 import { ProductsService } from '../products.service';
+import { Handler } from 'aws-lambda';
+import { HttpResponse } from '../../models/httpResponse';
 
-export function initGetProducts(productsService: ProductsService) {
-  async function getProducts() {
+export function initGetProducts(productsService: ProductsService): Handler {
+  async function getProducts(): Promise<HttpResponse> {
     console.log('getProducts called');
     try {
       console.log('getProducts successfully retrieved products');
-      return formatJSONResponse(await productsService.getAll());
+      return { statusCode: 200, body: await productsService.getAll() };
     } catch (e: unknown) {
       console.error('getProducts failed with error', e);
       return {
         statusCode: 500,
-        body: JSON.stringify({ message: e }),
+        body: { message: e },
       };
     }
   }

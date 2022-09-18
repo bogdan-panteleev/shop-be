@@ -1,7 +1,7 @@
-import { AWS } from '@serverless/typescript';
 import { handlerPath, pathUp } from '../../libs/handler-resolver';
+import { LambdaDefinition } from '../../models/lambdaDefinition';
 
-export const createProduct: AWS['functions']['createProduct'] = {
+export const createProduct: LambdaDefinition = {
   handler: `${pathUp(handlerPath(__dirname), 1)}/handlers.createProduct`,
   events: [
     {
@@ -9,14 +9,6 @@ export const createProduct: AWS['functions']['createProduct'] = {
         method: 'post',
         path: 'products',
         cors: true,
-        // request: {
-        //   schemas: {
-        //     'application/json': {
-        //       schema: create_product,
-        //       name: 'CreateProduct',
-        //     },
-        //   },
-        // },
       },
     },
   ],

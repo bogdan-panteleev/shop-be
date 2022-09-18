@@ -1,9 +1,10 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
-import { formatJSONResponse } from '../../libs/api-gateway';
 import { ProductsService } from '../products.service';
+import { Handler } from 'aws-lambda';
+import { HttpResponse } from '../../models/httpResponse';
 
-export function initGetProductById(productsService: ProductsService) {
-  async function getProductById(event: APIGatewayProxyEvent): Promise<any> {
+export function initGetProductById(productsService: ProductsService): Handler {
+  async function getProductById(event: APIGatewayProxyEvent): Promise<HttpResponse> {
     console.log('getProductById is called');
     try {
       if (!event.pathParameters?.productId) {
@@ -18,17 +19,17 @@ export function initGetProductById(productsService: ProductsService) {
         console.log(`getProductById product with id:${productId} does not exist`);
         return {
           statusCode: 404,
-          body: JSON.stringify({ message: `Product with ID:${productId} does not exist` }),
+          body: { message: `Product with ID:${productId} does not exist` },
         };
       }
 
       console.log('getProductById successfully returned product with id ', productId);
-      return formatJSONResponse(product);
+      return { statusCode: 200, body: product };
     } catch (error: unknown) {
       console.log(`getProductById failed with error `, error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ message: error instanceof Error ? error.toString() : error }),
+        body: { message: error instanceof Error ? error.toString() : error },
       };
     }
   }

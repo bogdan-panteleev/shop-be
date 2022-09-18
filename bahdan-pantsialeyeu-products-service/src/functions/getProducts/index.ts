@@ -1,9 +1,7 @@
-// import schema from './schema';
-
-import { AWS } from '@serverless/typescript';
 import { handlerPath, pathUp } from '../../libs/handler-resolver';
+import { LambdaDefinition } from '../../models/lambdaDefinition';
 
-export const getProducts: AWS['functions']['getProducts'] = {
+export const getProducts: LambdaDefinition = {
   handler: `${pathUp(handlerPath(__dirname), 1)}/handlers.getProducts`,
   events: [
     {
