@@ -32,3 +32,21 @@ export function initUpdateProduct(productsService: ProductsService): Handler {
 
   return updateProduct;
 }
+
+export const validationSchema = {
+  type: 'object',
+  properties: {
+    body: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        title: { type: 'string' },
+        description: { type: 'string' },
+        price: { type: 'number' },
+        count: { type: 'number' },
+      },
+      required: ['id'],
+    },
+  },
+  required: ['body'],
+};

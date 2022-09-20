@@ -23,3 +23,20 @@ export function initCreateProduct(productsService: ProductsService): Handler {
 
   return createProduct;
 }
+
+export const validationSchema = {
+  type: 'object',
+  properties: {
+    body: {
+      type: 'object',
+      properties: {
+        title: { type: 'string' },
+        description: { type: 'string' },
+        price: { type: 'number' },
+        count: { type: 'number' },
+      },
+      required: ['title', 'description', 'price', 'count'],
+    },
+  },
+  required: ['body'],
+};

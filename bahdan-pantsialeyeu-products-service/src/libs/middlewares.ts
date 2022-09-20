@@ -5,6 +5,7 @@ import httpCors from '@middy/http-cors';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpResponseSerializer from '@middy/http-response-serializer';
 import { Handler } from 'aws-lambda';
+import httpErrorHandler from '@middy/http-error-handler';
 
 export const middyfy = (handler: Handler) => {
   return middy(handler)
@@ -22,5 +23,6 @@ export const middyfy = (handler: Handler) => {
         ],
         defaultContentType: 'application/json',
       })
-    );
+    )
+    .use(httpErrorHandler());
 };
