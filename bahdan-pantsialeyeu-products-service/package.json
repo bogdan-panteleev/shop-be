@@ -1,9 +1,10 @@
 {
-  "name": "bahdan-pantsialeyeu-goods-service",
+  "name": "bahdan-pantsialeyeu-products-service",
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
+    "deploy": "sls deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -11,7 +12,16 @@
   },
   "dependencies": {
     "@middy/core": "^2.5.3",
-    "@middy/http-json-body-parser": "^2.5.3"
+    "@middy/http-cors": "^3.3.2",
+    "@middy/http-error-handler": "^3.3.4",
+    "@middy/http-event-normalizer": "^3.3.2",
+    "@middy/http-header-normalizer": "^3.3.2",
+    "@middy/http-json-body-parser": "^2.5.3",
+    "@middy/http-response-serializer": "^3.3.2",
+    "@middy/validator": "^3.3.2",
+    "@types/uuid": "^8.3.4",
+    "aws-sdk": "^2.1216.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",

@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Swagger Goods Service - OpenAPI 3.0
+  title: Swagger Products Service - OpenAPI 3.0
   description: |-
     Product service swagger
   version: 1.0.11
