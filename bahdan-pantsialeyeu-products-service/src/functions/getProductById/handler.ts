@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { ProductsService } from '../products.service';
 import { Handler } from 'aws-lambda';
-import { HttpResponse } from '../../models/httpResponse';
+import { HttpResponse } from '../../../../shared/httpResponse';
 
 export function initGetProductById(productsService: ProductsService): Handler {
   async function getProductById(event: APIGatewayProxyEvent): Promise<HttpResponse> {

@@ -13,7 +13,7 @@ import {
   initUpdateProduct,
   validationSchema as updateProductValidationSchema,
 } from './updateProduct/handler';
-import { middyfy } from '../libs/middlewares';
+import { middyfy } from '../../../shared/middlewares';
 import validator from '@middy/validator';
 
 const productsService = new ProductsService(

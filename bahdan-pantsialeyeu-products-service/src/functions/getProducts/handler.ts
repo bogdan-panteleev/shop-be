@@ -1,6 +1,6 @@
 import { ProductsService } from '../products.service';
 import { Handler } from 'aws-lambda';
-import { HttpResponse } from '../../models/httpResponse';
+import { HttpResponse } from '../../../../shared/httpResponse';
 
 export function initGetProducts(productsService: ProductsService): Handler {
   async function getProducts(): Promise<HttpResponse> {

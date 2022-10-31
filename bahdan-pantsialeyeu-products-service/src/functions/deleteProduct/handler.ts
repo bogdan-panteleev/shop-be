@@ -1,7 +1,7 @@
 import { ProductsService } from '../products.service';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { Handler } from 'aws-lambda';
-import { HttpResponse } from '../../models/httpResponse';
+import { HttpResponse } from '../../../../shared/httpResponse';
 
 export function initDeleteProduct(productsService: ProductsService): Handler {
   async function deleteProduct(event: APIGatewayProxyEvent): Promise<HttpResponse> {

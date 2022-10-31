@@ -1,7 +1,7 @@
 import { ProductsService } from '../products.service';
 import { GatewayProxyEvent, Product } from '../../models/product';
 import { Handler } from 'aws-lambda';
-import { HttpResponse } from '../../models/httpResponse';
+import { HttpResponse } from '../../../../shared/httpResponse';
 
 export function initUpdateProduct(productsService: ProductsService): Handler {
   async function updateProduct(event: GatewayProxyEvent<Product>): Promise<HttpResponse> {

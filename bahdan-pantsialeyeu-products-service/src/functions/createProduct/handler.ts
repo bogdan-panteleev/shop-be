@@ -2,7 +2,7 @@ import { ProductsService } from '../products.service';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { Product } from '../../models/product';
 import { Handler } from 'aws-lambda';
-import { HttpResponse } from '../../models/httpResponse';
+import { HttpResponse } from '../../../../shared/httpResponse';
 
 export function initCreateProduct(productsService: ProductsService): Handler {
   async function createProduct(event: APIGatewayProxyEvent): Promise<HttpResponse> {
