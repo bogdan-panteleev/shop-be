@@ -1,5 +1,5 @@
 {
-  "name": "bahdan-pantsialeyeu-products-service",
+  "name": "bahdan-pantsialeyeu-import-service",
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
@@ -11,9 +11,10 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@types/uuid": "^8.3.4",
-    "aws-sdk": "^2.1216.0",
-    "uuid": "^9.0.0"
+    "@middy/core": "^3.4.0",
+    "@middy/http-cors": "^3.6.2",
+    "@middy/http-json-body-parser": "^3.4.0",
+    "csv-parser": "^3.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",

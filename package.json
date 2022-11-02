@@ -18,10 +18,23 @@
   },
   "homepage": "https://github.com/bogdan-panteleev/shop-be#readme",
   "dependencies": {
-    "serverless": "^3.22.0"
+    "@middy/core": "^3.6.2",
+    "@middy/http-cors": "^3.6.2",
+    "@middy/http-error-handler": "^3.6.2",
+    "@middy/http-event-normalizer": "^3.6.2",
+    "@middy/http-header-normalizer": "^3.6.2",
+    "@middy/http-json-body-parser": "^3.6.2",
+    "@middy/http-response-serializer": "^3.6.2",
+    "@middy/validator": "^3.6.2",
+    "dotenv": "^16.0.3",
+    "serverless": "^3.22.0",
+    "tsconfig-paths": "^4.1.0"
   },
   "devDependencies": {
+    "@serverless/typescript": "^3.21.0",
+    "@types/aws-lambda": "^8.10.108",
     "@types/jest": "^28.1.7",
+    "@types/node": "^18.11.7",
     "esbuild": "^0.15.5",
     "esbuild-jest": "^0.5.0",
     "jest": "^28.1.3",

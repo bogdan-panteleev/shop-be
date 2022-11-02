@@ -9,7 +9,7 @@ export class HttpResponse {
   /**
    * The response body payload.
    */
-  body?: { [k: string]: any };
+  body?: { [k: string]: any } | string;
   /**
    * A map of response header keys and their respective values.
    */
@@ -19,7 +19,7 @@ export class HttpResponse {
   /**
    * The HTTP status code of the response (e.g., 200, 404).
    */
-  statusCode: number;
+  statusCode?: number;
   /**
    * The HTTP status message of the response (e.g., 'Bad Request', 'Not Found')
    */

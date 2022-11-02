@@ -1,5 +1,5 @@
-import { handlerPath, pathUp } from '../../libs/handler-resolver';
-import { LambdaDefinition } from '../../models/lambdaDefinition';
+import { handlerPath, pathUp } from '../../../../shared/handler-resolver';
+import { LambdaDefinition } from '../../../../shared/lambdaDefinition';
 
 export const createProduct: LambdaDefinition = {
   handler: `${pathUp(handlerPath(__dirname), 1)}/handlers.createProduct`,
