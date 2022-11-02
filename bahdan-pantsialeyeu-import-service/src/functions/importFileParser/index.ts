@@ -8,7 +8,13 @@ export const importFileParserFunction: LambdaDefinition = {
       s3: {
         bucket: 'bahdan-pantsialeyeu-import-service-bucket',
         event: 's3:ObjectCreated:*',
-        rules: [{ prefix: 'uploaded/' }],
+        rules: [
+          {
+            // @TODO use `suffix: '.csv'` here near the 'prefix'
+            prefix: 'uploaded/',
+            // suffix: '.csv'
+          },
+        ],
         existing: true,
       },
     },
