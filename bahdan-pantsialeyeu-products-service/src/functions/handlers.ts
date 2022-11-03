@@ -15,6 +15,7 @@ import {
 } from './updateProduct/handler';
 import { middyfy } from '../../../shared/middlewares';
 import validator from '@middy/validator';
+import { initCatalogBatchProcess } from './catalogBatchProcess/handler';
 
 const productsService = new ProductsService(
   new AWS.DynamoDB.DocumentClient(),
@@ -32,3 +33,4 @@ export const deleteProduct = middyfy(initDeleteProduct(productsService));
 export const updateProduct = middyfy(initUpdateProduct(productsService)).use(
   validator({ inputSchema: updateProductValidationSchema })
 );
+export const catalogBatchProcess = initCatalogBatchProcess(productsService);

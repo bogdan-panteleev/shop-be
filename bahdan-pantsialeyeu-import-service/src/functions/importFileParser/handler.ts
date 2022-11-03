@@ -3,7 +3,7 @@ import aws from 'aws-sdk';
 import csvParser from 'csv-parser';
 import { HttpResponse } from '../../../../shared/httpResponse';
 
-export function initImportFileParser(s3: aws.S3, bucketName: string): Handler {
+export function initImportFileParser(s3: aws.S3, bucketName: string, queue: aws.SQS): Handler {
   return async function importFileParser(event: S3Event): Promise<HttpResponse> {
     console.log('importFileParser is called with', event);
 
@@ -20,19 +20,31 @@ export function initImportFileParser(s3: aws.S3, bucketName: string): Handler {
             })
             .createReadStream();
 
-          const fileData: any[] = [];
-
           await new Promise((resolve, reject) => {
             fileStream
               .pipe(csvParser())
-              .on('data', (data) => {
-                console.log('data: ', data);
-                fileData.push(data);
+              .on('data', async (data) => {
+                try {
+                  console.log('processing data: ', data);
+                  await queue
+                    .sendMessage({
+                      QueueUrl: process.env.PRODUCTS_SQS_URL as string,
+                      MessageBody: JSON.stringify(data),
+                    })
+                    .promise();
+                  console.log('successfully send to queue ', data);
+                } catch (e) {
+                  console.log('failed to send to queue', data);
+                  console.log('failed with error', e);
+                }
               })
-              .on('error', reject)
+              .on('error', (error) => {
+                console.log('stream error: ', error);
+                reject();
+              })
               .on('end', () => {
-                console.log('end');
-                resolve(fileData);
+                console.log('done');
+                resolve(null);
               });
           });
 

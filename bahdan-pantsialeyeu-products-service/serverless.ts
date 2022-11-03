@@ -77,6 +77,24 @@ const serverlessConfiguration: AWS = {
           },
         },
       },
+
+      sqsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'bahdan-pantsialeyeu-goods-service-sqs-queue',
+        },
+      },
+    },
+
+    Outputs: {
+      queueUrl: {
+        Value: { Ref: 'sqsQueue' },
+      },
+      queueArn: {
+        Value: {
+          'Fn::GetAtt': ['sqsQueue', 'Arn'],
+        },
+      },
     },
   },
 };

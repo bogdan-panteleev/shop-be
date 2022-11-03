@@ -8,4 +8,8 @@ const s3 = new aws.S3({ region: 'eu-central-1' });
 export const importProductsFile = middyfy(
   initImportProductsFile(s3, process.env.S3_BUCKET as string)
 );
-export const importFileParser = initImportFileParser(s3, process.env.S3_BUCKET as string);
+export const importFileParser = initImportFileParser(
+  s3,
+  process.env.S3_BUCKET as string,
+  new aws.SQS()
+);
