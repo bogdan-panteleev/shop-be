@@ -22,7 +22,14 @@ export function initImportFileParser(s3: aws.S3, bucketName: string, queue: aws.
 
           await new Promise((resolve, reject) => {
             fileStream
-              .pipe(csvParser())
+              .pipe(
+                csvParser({
+                  mapValues: ({ value }) => {
+                    const number = Number(value);
+                    return isNaN(number) ? value : number;
+                  },
+                })
+              )
               .on('data', async (data) => {
                 try {
                   console.log('processing data: ', data);

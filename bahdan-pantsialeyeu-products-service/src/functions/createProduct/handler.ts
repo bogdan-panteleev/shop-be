@@ -16,7 +16,7 @@ export function initCreateProduct(productsService: ProductsService): Handler {
       console.error('createProduct error', e);
       return {
         statusCode: 500,
-        body: { message: e },
+        body: { message: e instanceof Error ? e.toString() : e },
       };
     }
   }
@@ -27,16 +27,10 @@ export function initCreateProduct(productsService: ProductsService): Handler {
 export const validationSchema = {
   type: 'object',
   properties: {
-    body: {
-      type: 'object',
-      properties: {
-        title: { type: 'string' },
-        description: { type: 'string' },
-        price: { type: 'number' },
-        count: { type: 'number' },
-      },
-      required: ['title', 'description', 'price', 'count'],
-    },
+    title: { type: 'string' },
+    description: { type: 'string' },
+    price: { type: 'number' },
+    count: { type: 'number' },
   },
-  required: ['body'],
+  required: ['title', 'description', 'price', 'count'],
 };

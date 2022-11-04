@@ -25,6 +25,13 @@ const serverlessConfiguration: AWS = {
             Action: 'dynamodb:*',
             Resource: '*',
           },
+          {
+            Effect: 'Allow',
+            Action: 'sns:*',
+            Resource: {
+              Ref: 'snsTopic',
+            },
+          },
         ],
       },
     },
@@ -35,6 +42,7 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SNS_TOPIC_ARN: { Ref: 'snsTopic' },
     },
   },
   // import the function via paths
@@ -82,6 +90,22 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: 'bahdan-pantsialeyeu-goods-service-sqs-queue',
+        },
+      },
+
+      snsTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'bahdan-pantsialeyeu-goods-service-sns-topic',
+        },
+      },
+
+      snsSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'bahdan_pantsialeyeu@epam.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'snsTopic' },
         },
       },
     },
