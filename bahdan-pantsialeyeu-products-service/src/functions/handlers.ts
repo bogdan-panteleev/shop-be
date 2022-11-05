@@ -1,6 +1,5 @@
 import { ProductsService } from './products.service';
 import * as AWS from 'aws-sdk';
-import { custom } from '../../custom';
 import { v4 as uuid } from 'uuid';
 import { initCreateProduct } from './createProduct/handler';
 import { initGetProductById } from './getProductById/handler';
@@ -12,7 +11,7 @@ import { initCatalogBatchProcess } from './catalogBatchProcess/handler';
 
 const productsService = new ProductsService(
   new AWS.DynamoDB.DocumentClient(),
-  custom.productsTableName,
+  process.env.PRODUCTS_TABLE as string,
   uuid
 );
 
@@ -23,5 +22,5 @@ export const getProducts = middyfy(initGetProducts(productsService));
 export const deleteProduct = middyfy(initDeleteProduct(productsService));
 export const updateProduct = middyfy(initUpdateProduct(productsService));
 
-const sns = new AWS.SNS();
+const sns = new AWS.SNS({ region: process.env.AWS_REGION });
 export const catalogBatchProcess = initCatalogBatchProcess(productsService, sns);
