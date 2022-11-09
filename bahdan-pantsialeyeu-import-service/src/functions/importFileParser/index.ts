@@ -10,9 +10,8 @@ export const importFileParserFunction: LambdaDefinition = {
         event: 's3:ObjectCreated:*',
         rules: [
           {
-            // @TODO use `suffix: '.csv'` here near the 'prefix'
             prefix: 'uploaded/',
-            // suffix: '.csv'
+            suffix: '.csv',
           },
         ],
         existing: true,
