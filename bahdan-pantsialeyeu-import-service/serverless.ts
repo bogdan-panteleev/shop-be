@@ -44,6 +44,37 @@ const serverlessConfiguration: AWS = {
       S3_BUCKET: process.env.S3_BUCKET as string,
       PRODUCTS_SQS_URL: '${param:productsQueueUrl}',
     },
+
+    s3: {
+      importsBucket: {
+        name: process.env.S3_BUCKET as string,
+        corsConfiguration: {
+          CorsRules: [
+            {
+              AllowedMethods: ['GET', 'PUT', 'HEAD', 'DELETE'],
+              AllowedHeaders: ['*'],
+              AllowedOrigins: ['*'],
+            },
+          ],
+        },
+        notificationConfiguration: {
+          LambdaConfigurations: [
+            {
+              Event: 's3:ObjectCreated:*',
+              Filter: {
+                S3Key: {
+                  Rules: [
+                    { Name: 'prefix', Value: 'uploaded/' },
+                    { Name: 'suffix', Value: '.csv' },
+                  ],
+                },
+              },
+              Function: { 'Fn::GetAtt': ['ImportFileParserFunctionLambdaFunction', 'Arn'] },
+            },
+          ],
+        },
+      },
+    },
   },
   // import the function via paths
   functions,
@@ -58,16 +89,6 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
-    },
-  },
-
-  resources: {
-    extensions: {
-      IamRoleCustomResourcesLambdaExecution: {
-        Properties: {
-          PermissionsBoundary: 'arn:aws:iam::${aws:accountId}:policy/eo_role_boundary',
-        },
-      },
     },
   },
 };
