@@ -3,9 +3,7 @@ import aws from 'aws-sdk';
 import { HttpResponse } from '../../../../shared/httpResponse';
 // @TODO set up autoswagger
 // @TODO write unit-tests
-// @TODO check automatic bucket creation
-// @TODO install modularized aws-sdk.i.e.: '@aws-sdk/client-s3'
-// @TODO read https://serverless.pub/migrating-to-aws-sdk-v3/
+// @TODO migrate to SDK v3
 
 export function initImportProductsFile(s3: aws.S3, bucketName: string): Handler {
   return async function importProductsFile(event: APIGatewayProxyEvent): Promise<HttpResponse> {
