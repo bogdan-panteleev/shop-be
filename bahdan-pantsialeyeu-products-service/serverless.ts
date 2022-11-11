@@ -109,6 +109,15 @@ const serverlessConfiguration: AWS = {
           TopicArn: { Ref: 'snsTopic' },
         },
       },
+      snsGloveSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'panteleevbbbogdan@gmail.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'snsTopic' },
+          FilterPolicy: JSON.stringify({ title: ['fencing glove'] }),
+        },
+      },
     },
 
     Outputs: {

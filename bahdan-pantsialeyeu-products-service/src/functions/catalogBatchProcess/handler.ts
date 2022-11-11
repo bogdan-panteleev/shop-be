@@ -21,6 +21,12 @@ export function initCatalogBatchProcess(productsService: ProductsService, sns: A
                 (data as Product).title
               }' is created.\nFull product details: ${JSON.stringify(data)}`,
               TopicArn: process.env.SNS_TOPIC_ARN as string,
+              MessageAttributes: {
+                title: {
+                  DataType: 'String',
+                  StringValue: (data as Product).title,
+                },
+              },
             })
             .promise();
         } catch (e) {
