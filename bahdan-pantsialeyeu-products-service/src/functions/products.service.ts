@@ -1,5 +1,8 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Product } from '../models/product';
+import Ajv from 'ajv';
+import { validationSchema as createProductValidationSchema } from './createProduct/handler';
+import { validationSchema as updateProductValidationSchema } from './updateProduct/handler';
 
 export class ProductsService {
   constructor(
@@ -23,6 +26,10 @@ export class ProductsService {
   }
 
   create(product: Omit<Product, 'id'>): Promise<any> {
+    const validate = new Ajv().compile(createProductValidationSchema);
+    if (!validate(product)) {
+      throw new Error(`Product validation failed with errors: ${JSON.stringify(validate.errors)}`);
+    }
     return this.dbClient
       .put({
         TableName: this.dataTable,
@@ -36,6 +43,10 @@ export class ProductsService {
   }
 
   update(product: Partial<Product>): Promise<any> {
+    const validate = new Ajv().compile(updateProductValidationSchema);
+    if (!validate(product)) {
+      throw new Error(`Product validation failed with errors: ${validate.errors}`);
+    }
     return this.dbClient.put({ TableName: this.dataTable, Item: { ...product } }).promise();
   }
 

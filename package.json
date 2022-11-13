@@ -28,9 +28,12 @@
     "@middy/validator": "^3.6.2",
     "dotenv": "^16.0.3",
     "serverless": "^3.22.0",
-    "tsconfig-paths": "^4.1.0"
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
+    "@serverless/compose": "^1.3.0",
     "@serverless/typescript": "^3.21.0",
     "@types/aws-lambda": "^8.10.108",
     "@types/jest": "^28.1.7",

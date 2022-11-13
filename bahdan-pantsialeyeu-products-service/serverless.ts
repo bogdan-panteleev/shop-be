@@ -1,6 +1,7 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import type { AWS } from '@serverless/typescript';
 import { functions } from './src/functions';
-import { custom } from './custom';
 
 const serverlessConfiguration: AWS = {
   service: 'bahdan-pantsialeyeu-goods-service',
@@ -25,6 +26,13 @@ const serverlessConfiguration: AWS = {
             Action: 'dynamodb:*',
             Resource: '*',
           },
+          {
+            Effect: 'Allow',
+            Action: 'sns:*',
+            Resource: {
+              Ref: 'snsTopic',
+            },
+          },
         ],
       },
     },
@@ -35,9 +43,10 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SNS_TOPIC_ARN: { Ref: 'snsTopic' },
+      PRODUCTS_TABLE: process.env.PRODUCTS_TABLE as string,
     },
   },
-  // import the function via paths
   functions,
   package: { individually: true },
   custom: {
@@ -58,7 +67,7 @@ const serverlessConfiguration: AWS = {
       productsTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
-          TableName: custom.productsTableName,
+          TableName: process.env.PRODUCTS_TABLE,
           AttributeDefinitions: [
             {
               AttributeName: 'id',
@@ -75,6 +84,49 @@ const serverlessConfiguration: AWS = {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
           },
+        },
+      },
+
+      sqsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'bahdan-pantsialeyeu-goods-service-sqs-queue',
+        },
+      },
+
+      snsTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'bahdan-pantsialeyeu-goods-service-sns-topic',
+        },
+      },
+
+      snsSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'bahdan_pantsialeyeu@epam.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'snsTopic' },
+        },
+      },
+      snsGloveSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'panteleevbbbogdan@gmail.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'snsTopic' },
+          FilterPolicy: JSON.stringify({ title: ['fencing glove'] }),
+        },
+      },
+    },
+
+    Outputs: {
+      queueUrl: {
+        Value: { Ref: 'sqsQueue' },
+      },
+      queueArn: {
+        Value: {
+          'Fn::GetAtt': ['sqsQueue', 'Arn'],
         },
       },
     },
