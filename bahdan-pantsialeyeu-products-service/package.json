@@ -5,6 +5,8 @@
   "main": "serverless.ts",
   "scripts": {
     "deploy": "sls deploy",
+    "swagger": "sls generate-swagger",
+    "offline": "sls offline start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -14,6 +16,7 @@
     "@types/uuid": "^8.3.4",
     "ajv": "^8.11.0",
     "aws-sdk": "^2.1216.0",
+    "serverless-auto-swagger": "^2.11.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -24,6 +27,7 @@
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",
+    "serverless-offline": "^11.3.0",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3"
