@@ -1,8 +1,6 @@
 import { APIGatewayProxyEvent, Handler } from 'aws-lambda';
 import aws from 'aws-sdk';
 import { HttpResponse } from '../../../../shared/httpResponse';
-// @TODO set up autoswagger
-// @TODO write unit-tests
 // @TODO migrate to SDK v3
 
 export function initImportProductsFile(s3: aws.S3, bucketName: string): Handler {
