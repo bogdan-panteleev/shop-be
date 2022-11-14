@@ -16,6 +16,13 @@ export const importProductsFile: LambdaDefinition = {
             },
           },
         },
+        authorizer: {
+          name: 'import-products-file-authorizer',
+          arn: '${param:authorizerArn}',
+          resultTtlInSeconds: 0,
+          identitySource: 'method.request.header.Authorization',
+          type: 'token',
+        },
       },
     },
   ],

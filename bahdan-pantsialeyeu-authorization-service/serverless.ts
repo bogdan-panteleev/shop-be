@@ -2,12 +2,20 @@ import { AWS } from '@serverless/typescript';
 import { functions } from './src/functions';
 
 const serverlessConfiguration: AWS = {
-  service: 'bahdan-pantsialeyeu-authorization-service',
+  useDotenv: true,
+  service: 'bahdan-pantsialeyeu-auth-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
+    profile: 'tmp',
+    region: 'eu-central-1',
+    iam: {
+      role: {
+        permissionsBoundary: 'arn:aws:iam::${aws:accountId}:policy/eo_role_boundary',
+      },
+    },
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -29,6 +37,14 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
+    },
+  },
+
+  resources: {
+    Outputs: {
+      authorizerArn: {
+        Value: { 'Fn::GetAtt': ['BasicAuthorizerLambdaFunction', 'Arn'] },
+      },
     },
   },
 };
