@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, Handler } from 'aws-lambda';
 import aws from 'aws-sdk';
 import { HttpResponse } from '../../../../shared/httpResponse';
 // @TODO migrate to SDK v3
+// @TODO check ability to customize gateway responses for unauthorized and forbidden cases https://github.com/Simaxa7/shop-be/pull/5/files
 
 export function initImportProductsFile(s3: aws.S3, bucketName: string): Handler {
   return async function importProductsFile(event: APIGatewayProxyEvent): Promise<HttpResponse> {
