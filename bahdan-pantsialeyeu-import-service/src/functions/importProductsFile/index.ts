@@ -18,10 +18,10 @@ export const importProductsFile: LambdaDefinition = {
         },
         authorizer: {
           name: 'import-products-file-authorizer',
-          arn: '${param:authorizerArn}',
-          resultTtlInSeconds: 0,
+          arn: 'arn:aws:cognito-idp:eu-central-1:398158581759:userpool/eu-central-1_zWrXaVUQ6',
+          // resultTtlInSeconds: 0,
           identitySource: 'method.request.header.Authorization',
-          type: 'token',
+          type: 'COGNITO_USER_POOLS',
         },
       },
     },
