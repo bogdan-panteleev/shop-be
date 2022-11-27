@@ -6,7 +6,7 @@ import { functions } from './src/functions';
 const serverlessConfiguration: AWS = {
   service: 'bahdan-pantsialeyeu-goods-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
